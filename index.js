@@ -50,9 +50,11 @@ function reducer(state = { amount: 1 }, action) {
 // getUser();
 
 //Action creators
-async function getUser(dispatch, getUser) {
-  const { data } = await axios.get("http://localhost:3000/accounts/1");
-  dispatch(initUser(data.amount));
+function getUser(id) {
+  return async (dispatch, getUser) => {
+    const { data } = await axios.get(`http://localhost:3000/accounts/${id}`);
+    dispatch(initUser(data.amount));
+  };
 }
 function initUser(value) {
   return { type: init, payload: value };
@@ -68,5 +70,5 @@ function incrementByAmount(amt) {
 }
 
 setTimeout(() => {
-  store.dispatch(getUser);
+  store.dispatch(getUser(2));
 }, 2000);
